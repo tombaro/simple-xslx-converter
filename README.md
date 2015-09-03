@@ -2,5 +2,5 @@
 A simple little nodeJs tool to convert a xlsx file to json and expose it with a json API
 
 ## Credits
-node-xlsx by Olivier Louvignes
+node-xlsx by Olivier Louvignes<br />
 Uses Express and Mongoose
