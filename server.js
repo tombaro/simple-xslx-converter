@@ -7,6 +7,7 @@
 var express    = require('express');        // call express
 var app        = express();                 // define our app using express
 var bodyParser = require('body-parser');
+var morgan = require('morgan');
 var xlsx2json = require( "xlsx2json" );
 var config = require( './config' );
 var mongoose = require( 'mongoose' );
@@ -23,14 +24,14 @@ var port = process.env.PORT || config.port;        // set our port
 // ===================================================
 mongoose.connect( 'mongodb:' + config.db.url );
 
+app.use(morgan('dev')); //Log
+
 // ROUTES FOR OUR API
 // =============================================================================
 var router = express.Router();              // get an instance of the express Router
 
 // middleware to use for all requests
 router.use(function(req, res, next) {
-	// do logging
-	console.log('Something is happening.');
 	next(); // make sure we go to the next routes and don't stop here
 });
 
@@ -62,7 +63,6 @@ router.route( '/persons' )
 				newPersons.push( newPerson );
 			});
 
-			console.log( 'Fetching all persons' );
 			res.json( newPerson );
 		});
 	});
@@ -102,7 +102,6 @@ router.route( '/persons/count' )
 		Person.count({}, function( err, count ){
 			if ( err ) { throw err };
 
-			console.log( 'We count to ' + count );
 			res.json( { count: count } );
 		});
 	});
@@ -122,7 +121,6 @@ router.route( '/person/:id' )
 				});
 			});
 
-			console.log( 'Found this person(s): ' + persons );
 			res.json( newPerson );
 		});
 	});
