@@ -7,12 +7,12 @@ var xlsx2json = require( "xlsx2json" );
 module.exports = function(app, passport, filepath) {
 
 	// test route to make sure everything is working (accessed at GET http://localhost:<port>/)
-	app.get('/', passport.authenticate( 'basic', { session: false } ), function(req, res) {
+	app.get('/', function(req, res) {
 		res.json({ message: 'hooray! welcome to our api!' });   
 	});
 
 	// Get all persons
-	app.get( '/persons', function( req, res ) {
+	app.get( '/persons', passport.authenticate( 'basic', { session: false } ), function( req, res ) {
 		var newPerson = [];
 		var newPersons = [];
 		Person.find( {}, function( err, persons ) {
@@ -32,7 +32,7 @@ module.exports = function(app, passport, filepath) {
 	});
 
 	// Insert all persons from file into db
-	app.get('/persons/save', function(req, res) {
+	app.get('/persons/save', passport.authenticate( 'basic', { session: false } ), function(req, res) {
 		xlsx2json( filepath, 
 		{
 			dataStartingRow: 2,
@@ -69,7 +69,7 @@ module.exports = function(app, passport, filepath) {
 	});
 
 	// Get person by personnummer
-	app.get( '/person/:id', function( req, res ) {
+	app.get( '/person/:id', passport.authenticate( 'basic', { session: false } ), function( req, res ) {
 		var newPerson = [];
 		Person.find( {personnummer: req.params.id }, function( err, persons ) {
 			if ( err ) { throw err };
