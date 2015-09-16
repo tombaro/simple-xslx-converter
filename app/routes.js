@@ -1,6 +1,7 @@
 // routes.js
 
 var Person = require('./models/person');
+var User = require('./models/user');
 
 module.exports = function(app, passport) {
 
@@ -83,4 +84,22 @@ module.exports = function(app, passport) {
 			res.json( newPerson );
 		});
 	});
+
+	// Create new user
+	/*app.post('/users/add', function(req, res) {
+		var username = req.body.username;
+		var password = req.body.password;
+
+		var newUser = new User();
+
+		newUser.basic.username = username;
+		newUser.basic.password = newUser.generateHash(password);
+
+		newUser.save(function(err) {
+			if (err) {
+				throw err;
+			}
+			return res.json('User created');
+		});
+	});*/
 }

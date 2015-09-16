@@ -13,25 +13,29 @@ var config = require( './config' );
 var mongoose = require( 'mongoose' );
 var passport = require( 'passport' );
 
-require('./app/passport')(passport); 
-
-// configure app to use bodyParser()
-// this will let us get the data from a POST
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-
 var port = process.env.PORT || config.port;        // set our port
 
 // DB STUFF 
 // ===================================================
 mongoose.connect( 'mongodb:' + config.db.url );
 
+// Configure Passport
+require('./app/passport')(passport); 
+
+
+// configure app to use bodyParser()
+// this will let us get the data from a POST
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
 // LOG 
 app.use(morgan('dev'));
 
 // Passport stuff
-app.use(passport.initialize());
+app.use(passport.initialize());	
 
+
+// Routes
 require('./app/routes.js')(app, passport);
 
 
