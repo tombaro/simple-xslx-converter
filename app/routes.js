@@ -2,8 +2,9 @@
 
 var Person = require('./models/person');
 var User = require('./models/user');
+var xlsx2json = require( "xlsx2json" );
 
-module.exports = function(app, passport) {
+module.exports = function(app, passport, filepath) {
 
 	// test route to make sure everything is working (accessed at GET http://localhost:<port>/)
 	app.get('/', passport.authenticate( 'basic', { session: false } ), function(req, res) {
@@ -32,7 +33,7 @@ module.exports = function(app, passport) {
 
 	// Insert all persons from file into db
 	app.get('/persons/save', function(req, res) {
-		xlsx2json( "assets/Testfil-150313copy.xlsx", 
+		xlsx2json( filepath, 
 		{
 			dataStartingRow: 2,
 			mapping: {

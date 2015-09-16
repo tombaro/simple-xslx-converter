@@ -8,7 +8,6 @@ var express    = require('express');        // call express
 var app        = express();                 // define our app using express
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
-var xlsx2json = require( "xlsx2json" );
 var config = require( './config' );
 var mongoose = require( 'mongoose' );
 var passport = require( 'passport' );
@@ -36,7 +35,7 @@ app.use(passport.initialize());
 
 
 // Routes
-require('./app/routes.js')(app, passport);
+require('./app/routes.js')(app, passport, config.filepath);
 
 
 // START THE SERVER
